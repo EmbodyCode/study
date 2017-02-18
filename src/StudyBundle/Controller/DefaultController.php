@@ -10,6 +10,8 @@ class DefaultController extends Controller
     /**
      * @Route("/")
      */
+    
+    //def
     public function indexAction()
     {
         $user = $this->getUser();
