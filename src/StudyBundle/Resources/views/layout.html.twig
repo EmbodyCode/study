@@ -1,127 +1,133 @@
 <!DOCTYPE html>
 <html>
- <head>
-  <meta charset="utf-8">
-  <title>Study</title>
-  <link rel="stylesheet" type="text/css" href="{{asset('css/index-style.css')}}">
-  <script type="text/javascript" src="https://yastatic.net/jquery/3.1.0/jquery.min.js"></script>
-  <script type="text/javascript" src="https://yastatic.net/jquery-ui/1.11.2/jquery-ui.min.js"></script>
-  <script type="text/javascript" src="{{asset('scripts/equal-height.js')}}"></script>
- </head>
- <body>
+    <head>
+        <meta charset="utf-8">
+        <title>Study</title>
+        <link rel="stylesheet" type="text/css" href="{{asset('css/index-style.css')}}">
+        <script type="text/javascript" src="https://yastatic.net/jquery/3.1.0/jquery.min.js"></script>
+        <script type="text/javascript" src="https://yastatic.net/jquery-ui/1.11.2/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="{{asset('scripts/equal-height.js')}}"></script>
+    </head>
+    <body>
 
-   <div id="p_prldr"><p>Структурируем данные...</p></div>
+        <div id="p_prldr"><p>Структурируем данные...</p></div>
 
-   <header>
-     <a class="header-brand" href="#">Study</a>
-     <div class="header-nav">
-       <a href="">Главная</a>
-       <a href="">Сообщения</a>
-       <a href="">Администрирование</a>
-       <a href="login.html">Выход</a>
-       <a href="">Поддержка</a>
-       <input id="header-search" placeholder="Поиск">
-     </div>
-   </header>
-  <div class="content">
-     <div class="sidebar">
-       <h1 class="sidebar-title">Статистика</h1>
-       <ul class="sidebar-list">
-         <a href="#"><li>Успеваемость</li></a>
-         <a href="#"><li>Посещаемость</li></a>
-       </ul>
-       <h1 class="sidebar-title">Учебные материалы</h1>
-       <ul class="sidebar-list">
-         <a href="/dynamic/math"><li>Математика</li></a>
-         <a href="#"><li>Физика</li></a>
-         <a href="#"><li>Английский язык</li></a>
-         <a href="#"><li>Философия</li></a>
-         <a href="#"><li>История</li></a>
-         <a href="#"><li>Программирование</li></a>
-       </ul>
-       <h1 class="sidebar-title">Прочее</h1>
-       <ul class="sidebar-list">
-         <a href="#"><li>Связаться со старостой</li></a>
-       </ul>
-     </div>
+        <header>
+            <a class="header-brand" href="/">Study</a>
+            <div class="header-nav">
+                <a href="">Главная</a>
+                <a href="">Сообщения</a>
+                <a href="">Администрирование</a>
+                <a href="logout">Выход</a>
+                <a href="">Поддержка</a>
+                <input id="header-search" placeholder="Поиск">
+            </div>
+        </header>
+        <div class="content">
+            <div class="sidebar">
+                <h1 class="sidebar-title">Статистика</h1>
+                <ul class="sidebar-list">
+                    <a href="#"><li>Успеваемость</li></a>
+                    <a href="#"><li>Посещаемость</li></a>
+                </ul>
+                <h1 class="sidebar-title">Учебные материалы</h1>
+                <ul class="sidebar-list">
+                    <a href="/dynamic/math"><li>Математика</li></a>
+                    <a href="#"><li>Физика</li></a>
+                    <a href="#"><li>Английский язык</li></a>
+                    <a href="#"><li>Философия</li></a>
+                    <a href="#"><li>История</li></a>
+                    <a href="#"><li>Программирование</li></a>
+                </ul>
+                <h1 class="sidebar-title">Прочее</h1>
+                <ul class="sidebar-list">
+                    <a href="#"><li>Связаться со старостой</li></a>
+                </ul>
+            </div>
 
-     <div class="main">
-       <div class="user-information">
-         <div class="user-information_photo"></div>
-         <button class="user-information_settings">Мой профиль</button>
-         <h1 class="user-information_name">Андрей Стратанович</h1>
-         <h2 class="user-information_university">Белорусский государственный университет
-           информатики и радиоэлектроники</h2>
-         <h2 class="user-information_faculty">Факультет компьютерного проектирования</h2>
-         <h2 class="user-information_group">Группа №514302</h2>
-         <h2 class="user-information_GPA">Средний балл: <span>6.2</span></h2>
-         <h2 class="user-information_attendance">Посещаемость: <span>82%</span></h2>
-         <form class="how-are-you">
-           <textarea class="user-information_how-are-you" placeholder="Как Ваши дела?"></textarea>
-           <button class="user-information_how-are-you_send">Отправить</button>
-         </form>
-       </div>
+            {% block user %}
+                <div class="main">
+                    <div class="user-information">
+                        <div class="user-information_photo"></div>
+                        <button class="user-information_settings">Мой профиль</button>
+                        <h1 class="user-information_name">Андрей Стратанович</h1>
+                        <h2 class="user-information_university">Белорусский государственный университет
+                            информатики и радиоэлектроники</h2>
+                        <h2 class="user-information_faculty">Факультет компьютерного проектирования</h2>
+                        <h2 class="user-information_group">Группа №514302</h2>
+                        <h2 class="user-information_GPA">Средний балл: <span>6.2</span></h2>
+                        <h2 class="user-information_attendance">Посещаемость: <span>82%</span></h2>
+                        <form class="how-are-you">
+                            <textarea class="user-information_how-are-you" placeholder="Как Ваши дела?"></textarea>
+                            <button class="user-information_how-are-you_send">Отправить</button>
+                        </form>
+                    </div>
 
-       {% block content %}
-       <div class="news">
-         <h1 class="news-title">Новости</h1>
-         <div class="news-item neutral"><a href="#">
-           <h1 class="news-item_title">Вторая смена</h1>
-           <p class="news-item_text">По неподтвержденным данным, учебные занятия в
-             некоторые дни возможны во вторую смену. Стоит отметить, что это еще
-             не подтвержденная деканатом информация, но стоит быть готовым ко всему.</p>
-         </a></div>
-         <div class="news-item good"><a href="#">
-           <h1 class="news-item_title">Новый одногруппник</h1>
-           <p class="news-item_text">Теперь официально: с начала нового учебного года в нашем коллективе новый одногруппник.
-             Встретим его хлебом и солью!</p>
-         </a></div>
-         <div class="news-item bad"><a href="#">
-           <h1 class="news-item_title">Экзамен!</h1>
-           <p class="news-item_text">Напоминаю, что у тебя, Гладкого Андрея и Булойчика Артура «висит» сдача экзамена по
-             дисциплине «Основы алгоритмизации и программирования». Советую вам обратиться к
-             преподавателю и в деканат для уточнения всех возможных вопросов. Не затягивайте.</p>
-         </a></div>
-         <div class="news-item notification"><a href="#">
-           <h1 class="news-item_title">STUDY University: «Добро пожаловать!»</h1>
-           <p class="news-item_text">Ваша группа была успешно подключена к системе взаимодействия студентов «STUDY University».
-             В случае возникновения каких-либо проблем можно воспользоваться системой технической
-             поддержки пользователей. Добро пожаловать!</p>
-         </a></div>
-       </div>
-       
-       {% endblock %}
+                {% endblock %}
 
-     </div>
+                {% block content %}
+                    <div class="news">
+                        <h1 class="news-title">Новости</h1>
+                        <div class="news-item neutral"><a href="#">
+                                <h1 class="news-item_title">Вторая смена</h1>
+                                <p class="news-item_text">По неподтвержденным данным, учебные занятия в
+                                    некоторые дни возможны во вторую смену. Стоит отметить, что это еще
+                                    не подтвержденная деканатом информация, но стоит быть готовым ко всему.</p>
+                            </a></div>
+                        <div class="news-item good"><a href="#">
+                                <h1 class="news-item_title">Новый одногруппник</h1>
+                                <p class="news-item_text">Теперь официально: с начала нового учебного года в нашем коллективе новый одногруппник.
+                                    Встретим его хлебом и солью!</p>
+                            </a></div>
+                        <div class="news-item bad"><a href="#">
+                                <h1 class="news-item_title">Экзамен!</h1>
+                                <p class="news-item_text">Напоминаю, что у тебя, Гладкого Андрея и Булойчика Артура «висит» сдача экзамена по
+                                    дисциплине «Основы алгоритмизации и программирования». Советую вам обратиться к
+                                    преподавателю и в деканат для уточнения всех возможных вопросов. Не затягивайте.</p>
+                            </a></div>
+                        <div class="news-item notification"><a href="#">
+                                <h1 class="news-item_title">STUDY University: «Добро пожаловать!»</h1>
+                                <p class="news-item_text">Ваша группа была успешно подключена к системе взаимодействия студентов «STUDY University».
+                                    В случае возникновения каких-либо проблем можно воспользоваться системой технической
+                                    поддержки пользователей. Добро пожаловать!</p>
+                            </a></div>
+                    </div>
 
-     <div class="upcoming-events">
-       <h1 class="upcoming-events-title">Предстоящие события</h1>
-       <a href="#"><div class="upcoming-events-item" style="background: url(https://content.onliner.by/news/1100x5616/76b9650712a1e11804c32b952ffce7fd.jpeg);
-       background-position: center; background-size: cover">
-         <h1 class="upcoming-events-item_title">Беседы за чаем в кафе</h1>
-         <p class="upcoming-events-item_date">2.09.2016 в 16:10</p>
-       </div></a>
-       <a href="#"><div class="upcoming-events-item" style="background: url(http://iff.ifmo.ru/wordpress/wp-content/uploads/2013/04/1349107454.png);
-       background-position: center; background-size: cover">
-         <h1 class="upcoming-events-item_title">Медицинский осмотр</h1>
-         <p class="upcoming-events-item_date">2.09.2016 в 16:10</p>
-       </div></a>
-       <a href="#"><div class="upcoming-events-item" style="background: url(http://venividi.ru/sites/default/files/styles/large/public/images/20312/muzey_apple_moskva.jpg);
-       background-position: center; background-size: cover">
-         <h1 class="upcoming-events-item_title">Музей техники Apple</h1>
-         <p class="upcoming-events-item_date">2.09.2016 в 16:10</p>
-       </div></a>
-       <a href="#"><div class="upcoming-events-item" style="background: url(http://www.sostav.ru/articles/rus/2012/20.09/news/images/byn16rnt.jpg);
-       background-position: center; background-size: cover">
-         <h1 class="upcoming-events-item_title">Может в кино?</h1>
-         <p class="upcoming-events-item_date">2.09.2016 в 16:10</p>
-       </div></a>
-     </div>
-  </div>
-   <footer>Study &copy; 2016</footer>
+                {% endblock %}
 
-   <script type="text/javascript">$(window).on('load', function () { var $preloader = $('#p_prldr'); $preloader.delay(5200).fadeOut('slow');});</script>
+            </div>
+
+            <div class="upcoming-events">
+                <h1 class="upcoming-events-title">Предстоящие события</h1>
+                <a href="#"><div class="upcoming-events-item" style="background: url(https://content.onliner.by/news/1100x5616/76b9650712a1e11804c32b952ffce7fd.jpeg);
+                                 background-position: center; background-size: cover">
+                        <h1 class="upcoming-events-item_title">Беседы за чаем в кафе</h1>
+                        <p class="upcoming-events-item_date">2.09.2016 в 16:10</p>
+                    </div></a>
+                <a href="#"><div class="upcoming-events-item" style="background: url(http://iff.ifmo.ru/wordpress/wp-content/uploads/2013/04/1349107454.png);
+                                 background-position: center; background-size: cover">
+                        <h1 class="upcoming-events-item_title">Медицинский осмотр</h1>
+                        <p class="upcoming-events-item_date">2.09.2016 в 16:10</p>
+                    </div></a>
+                <a href="#"><div class="upcoming-events-item" style="background: url(http://venividi.ru/sites/default/files/styles/large/public/images/20312/muzey_apple_moskva.jpg);
+                                 background-position: center; background-size: cover">
+                        <h1 class="upcoming-events-item_title">Музей техники Apple</h1>
+                        <p class="upcoming-events-item_date">2.09.2016 в 16:10</p>
+                    </div></a>
+                <a href="#"><div class="upcoming-events-item" style="background: url(http://www.sostav.ru/articles/rus/2012/20.09/news/images/byn16rnt.jpg);
+                                 background-position: center; background-size: cover">
+                        <h1 class="upcoming-events-item_title">Может в кино?</h1>
+                        <p class="upcoming-events-item_date">2.09.2016 в 16:10</p>
+                    </div></a>
+            </div>
+        </div>
+        <footer>Study &copy; 2016</footer>
+
+        <script type="text/javascript">$(window).on('load', function () {
+           var $preloader = $('#p_prldr');
+           $preloader.delay(5200).fadeOut('slow');
+       });</script>
 
 
- </body>
+    </body>
 </html>

@@ -28,3 +28,22 @@
             </a></div>
     </div>
 {% endblock %}
+
+{% block user %}
+    <div class="main">
+        <div class="user-information">
+            <div class="user-information_photo"></div>
+            <button class="user-information_settings">Мой профиль</button>
+            <h1 class="user-information_name">{{user.firstname}} {{user.lastname }}</h1>
+            <h2 class="user-information_university">Белорусский государственный университет
+                информатики и радиоэлектроники</h2>
+            <h2 class="user-information_faculty">Факультет компьютерного проектирования</h2>
+            <h2 class="user-information_group">Группа №514302</h2>
+            <h2 class="user-information_GPA">Средний балл: <span>6.2</span></h2>
+            <h2 class="user-information_attendance">Посещаемость: <span>82%</span></h2>
+            <form class="how-are-you">
+                <textarea class="user-information_how-are-you" placeholder="Как Ваши дела?"></textarea>
+                <button class="user-information_how-are-you_send">Отправить</button>
+            </form>
+        </div>
+{% endblock %}

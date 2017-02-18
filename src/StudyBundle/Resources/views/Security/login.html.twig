@@ -8,7 +8,7 @@
     </head>
     <body>
         <header>
-            <a class="header-brand" href="#">Study</a>
+            <a class="header-brand" href="/">Study</a>
             <div class="header-nav">
                 <a href="">Поддержка</a>
                 <a href="">О регистрации</a>
@@ -16,11 +16,15 @@
         </header>
         <div class="login_background">
             <div class="login_form">
-                <form method="POST">
-                    <input type="text" placeholder="Номер студенческого билета" required autofocus>
-                    <input type="password" placeholder="Пароль" required autofocus>
+                <form action="{{ path("fos_user_security_check") }}" method="POST">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                    <input type="text" name="_username" placeholder="Номер студенческого билета" required autofocus>
+                    <input type="password" name="_password" placeholder="Пароль" required autofocus>
                     <button type="submit">Войти</button>
                     <a href="" class="help_link">Нужна помощь?</a>
+                    {% if error %}
+                        <div><font color="red">{{ error|trans({}, 'FOSUserBundle') }}</font></div>
+                    {% endif %}
                 </form>
             </div>
         </div>
