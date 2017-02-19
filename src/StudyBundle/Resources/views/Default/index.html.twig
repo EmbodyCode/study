@@ -5,61 +5,72 @@
         <h1 class="news-title">Новости</h1>
         {% if newsArray is defined %}
             {% for news in newsArray %}
-                {% if user.class == news.classDestination %}
-                    {% if news.type == "neutral" %}
-                        <div class="news-item neutral"><a href="#">
+                {% if news.type == "notification" %}
+                    <div class="news-item notification"><a href="#">
+                            <h1 class="news-item_title">{{ news.title }}</h1>
+                            <p class="news-item_text">{{ news.shortText }}</p>
+                        </a></div>
+                    {% endif %}
+                    {% if user.class == news.classDestination %}
+                        {% if news.type == "neutral" %}
+                            <div class="news-item neutral"><a href="#">
                                 <h1 class="news-item_title">{{ news.title }}</h1>
+                                <p class="news-item_text">{{ news.shortText }}</p>
+                                </a>
+                            </div>
+                        {% endif %}
+
+                        {% if news.type == "good" %}
+                            <div class="news-item good">
+                                <a href="#">
+                                    <h1 class="news-item_title">{{ news.title }}</h1>
                                     <p class="news-item_text">{{ news.shortText }}</p>
-                            </a></div>
+                                </a>
+                            </div>
                         {% endif %}
 
-                    {% if news.type == "good" %}
-                        <div class="news-item good"><a href="#">
-                                <h1 class="news-item_title">{{ news.title }}</h1>
-                                <p class="news-item_text">{{ news.shortText }}</p>
-                            </a></div>
+                        {% if news.type == "bad" %}
+                            <div class="news-item bad">
+                                <a href="#">
+                                    <h1 class="news-item_title">{{ news.title }}</h1>
+                                    <p class="news-item_text">{{ news.shortText }}</p>
+                                 </a>
+                            </div>
                         {% endif %}
-
-                    {% if news.type == "bad" %}
-                        <div class="news-item bad"><a href="#">
-                                <h1 class="news-item_title">{{ news.title }}</h1>
-                                <p class="news-item_text">{{ news.shortText }}</p>
-                            </a></div>
                     {% endif %}
-
-                    {% if news.type == "notification" %}
-                        <div class="news-item notification"><a href="#">
-                                <h1 class="news-item_title">{{ news.title }}</h1>
-                                <p class="news-item_text">{{ news.shortText }}</p>
-                            </a></div>
-                    {% endif %}
-
-                {% endif %}
             {% endfor %}
+            {% if is_granted('ROLE_STEWARD') %}
+                        <div>
+                           {{ form_start(form) }}
+                           {{ form_widget(form) }}
+                           
+                        </div>
+            {% endif %}
         {% endif %}
     </div>
 {% endblock %}
 
 {% block user %}
-    <div class="main">
-        <div class="user-information">
-            <div class="user-information_photo"></div>
-            <button class="user-information_settings">Мой профиль</button>
-            <h1 class="user-information_name">{{user.firstname}} {{user.lastname }}</h1>
-            <h2 class="user-information_university">Белорусский государственный университет
-                информатики и радиоэлектроники</h2>
-            <h2 class="user-information_faculty">{{user.faculty}}</h2>
-            <h2 class="user-information_group">Группа №{{user.class}}</h2>
-            <h2 class="user-information_GPA">Средний балл: <span>{{user.average}}</span></h2>
-            <h2 class="user-information_attendance">Посещаемость: <span>{{user.attendance}}%</span></h2>
-            <form class="how-are-you" method="POST">
-                {% if user.status == "" %}
-                    <textarea class="user-information_how-are-you" name="status" placeholder="Как Ваши дела?"></textarea>
-                {% else %}
-                    <textarea class="user-information_how-are-you" name="status" placeholder="{{user.status}}"></textarea>
-                {% endif %}
+        <div class="main">
+            <div class="user-information">
+                <div class="user-information_photo"></div>
+                <button class="user-information_settings">Мой профиль</button>
+                <h1 class="user-information_name">{{user.firstname}} {{user.lastname }}</h1>
+                <h2 class="user-information_university">Белорусский государственный университет
+                    информатики и радиоэлектроники</h2>
+                <h2 class="user-information_faculty">{{user.faculty}}</h2>
+                <h2 class="user-information_group">Группа №{{user.class}}</h2>
+                <h2 class="user-information_GPA">Средний балл: <span>{{user.average}}</span></h2>
+                <h2 class="user-information_attendance">Посещаемость: <span>{{user.attendance}}%</span></h2>
+                <form class="how-are-you" method="POST" action="{{path('home')}}">
+                    {% if user.status == "" %}
+                        <textarea class="user-information_how-are-you" name="status" placeholder="Как Ваши дела?"
+                                  required></textarea>
+                    {% else %}
+                        <textarea class="user-information_how-are-you" name="status" placeholder="{{user.status}}"></textarea>
+                    {% endif %}
 
-                <button type="submit" class="user-information_how-are-you_send">Отправить</button>
-            </form>
-        </div>
-    {% endblock %}
+                    <button type="submit" class="user-information_how-are-you_send">Отправить</button>
+                </form>
+            </div>
+{% endblock %}

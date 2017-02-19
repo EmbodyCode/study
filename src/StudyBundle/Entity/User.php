@@ -44,7 +44,7 @@ class User extends BaseUser {
     private $speciality;
 
     /**
-     * @ORM\Column(type="integer", name="average")
+     * @ORM\Column(type="float", name="average")
      */
     private $average;
 
