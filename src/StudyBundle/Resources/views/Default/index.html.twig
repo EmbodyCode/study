@@ -3,29 +3,40 @@
 {% block content %}
     <div class="news">
         <h1 class="news-title">Новости</h1>
-        <div class="news-item neutral"><a href="#">
-                <h1 class="news-item_title">Вторая смена</h1>
-                <p class="news-item_text">По неподтвержденным данным, учебные занятия в
-                    некоторые дни возможны во вторую смену. Стоит отметить, что это еще
-                    не подтвержденная деканатом информация, но стоит быть готовым ко всему.</p>
-            </a></div>
-        <div class="news-item good"><a href="#">
-                <h1 class="news-item_title">Новый одногруппник</h1>
-                <p class="news-item_text">Теперь официально: с начала нового учебного года в нашем коллективе новый одногруппник.
-                    Встретим его хлебом и солью!</p>
-            </a></div>
-        <div class="news-item bad"><a href="#">
-                <h1 class="news-item_title">Экзамен!</h1>
-                <p class="news-item_text">Напоминаю, что у тебя, Гладкого Андрея и Булойчика Артура «висит» сдача экзамена по
-                    дисциплине «Основы алгоритмизации и программирования». Советую вам обратиться к
-                    преподавателю и в деканат для уточнения всех возможных вопросов. Не затягивайте.</p>
-            </a></div>
-        <div class="news-item notification"><a href="#">
-                <h1 class="news-item_title">STUDY University: «Добро пожаловать!»</h1>
-                <p class="news-item_text">Ваша группа была успешно подключена к системе взаимодействия студентов «STUDY University».
-                    В случае возникновения каких-либо проблем можно воспользоваться системой технической
-                    поддержки пользователей. Добро пожаловать!</p>
-            </a></div>
+        {% if newsArray is defined %}
+            {% for news in newsArray %}
+                {% if user.class == news.classDestination %}
+                    {% if news.type == "neutral" %}
+                        <div class="news-item neutral"><a href="#">
+                                <h1 class="news-item_title">{{ news.title }}</h1>
+                                    <p class="news-item_text">{{ news.shortText }}</p>
+                            </a></div>
+                        {% endif %}
+
+                    {% if news.type == "good" %}
+                        <div class="news-item good"><a href="#">
+                                <h1 class="news-item_title">{{ news.title }}</h1>
+                                <p class="news-item_text">{{ news.shortText }}</p>
+                            </a></div>
+                        {% endif %}
+
+                    {% if news.type == "bad" %}
+                        <div class="news-item bad"><a href="#">
+                                <h1 class="news-item_title">{{ news.title }}</h1>
+                                <p class="news-item_text">{{ news.shortText }}</p>
+                            </a></div>
+                    {% endif %}
+
+                    {% if news.type == "notification" %}
+                        <div class="news-item notification"><a href="#">
+                                <h1 class="news-item_title">{{ news.title }}</h1>
+                                <p class="news-item_text">{{ news.shortText }}</p>
+                            </a></div>
+                    {% endif %}
+
+                {% endif %}
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}
 
