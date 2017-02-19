@@ -193,18 +193,14 @@ header .header-nav a:hover { color: #C5CAE9 }
 }
 
 .main .user-information .user-information_photo {
-  position: absolute;
-  width: 160px;
-  height: 145px;
-  margin-left: 20px;
-  margin-top: 10px;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
-  background: url(https://pp.vk.me/c636230/v636230379/1e8e3/-z545-fsKMc.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-color: rgba(0, 0, 0, 0.1);
+position: absolute;
+width: 160px;
+height: 145px;
+margin-left: 20px;
+margin-top: 10px;
+border-top-left-radius: 2px;
+border-top-right-radius: 2px;
+background-color: rgba(0, 0, 0, 0.1);
 }
 
 .main .user-information .user-information_settings {

@@ -17,7 +17,9 @@
             <div class="header-nav">
                 <a href="">Главная</a>
                 <a href="">Сообщения</a>
-                <a href="">Администрирование</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="">Администрирование</a>
+                {% endif %}
                 <a href="logout">Выход</a>
                 <a href="">Поддержка</a>
                 <input id="header-search" placeholder="Поиск">

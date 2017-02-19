@@ -17,7 +17,7 @@ class NewsType extends AbstractType
             ->add('Type', ChoiceType::class, array(
                 'label' => 'Тип новости',
                 'choices'  => array(
-        'Обычыная' => 'neutral',
+        'Обычная' => 'neutral',
         'Хорошая' => 'good',
         'Плохая' => 'bad',
     ),
