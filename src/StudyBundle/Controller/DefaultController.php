@@ -4,18 +4,24 @@ namespace StudyBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller
-{
+class DefaultController extends Controller {
+
     /**
-     * @Route("/")
+     * @Route("/", name="home")
      */
-    
-    //def
-    public function indexAction()
-    {
+    public function indexAction(Request $request) {
         $user = $this->getUser();
-        return $this->render('StudyBundle:Default:index.html.twig',array(''
-            . 'user' => $user));
+        if ($request->getMethod() == "POST") {
+            $status = $request->get('status');
+            $user->setStatus($status);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+        }
+        return $this->render('StudyBundle:Default:index.html.twig', array(''
+                    . 'user' => $user));
     }
+
 }

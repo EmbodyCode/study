@@ -37,13 +37,18 @@
             <h1 class="user-information_name">{{user.firstname}} {{user.lastname }}</h1>
             <h2 class="user-information_university">Белорусский государственный университет
                 информатики и радиоэлектроники</h2>
-            <h2 class="user-information_faculty">Факультет компьютерного проектирования</h2>
-            <h2 class="user-information_group">Группа №514302</h2>
-            <h2 class="user-information_GPA">Средний балл: <span>6.2</span></h2>
-            <h2 class="user-information_attendance">Посещаемость: <span>82%</span></h2>
-            <form class="how-are-you">
-                <textarea class="user-information_how-are-you" placeholder="Как Ваши дела?"></textarea>
-                <button class="user-information_how-are-you_send">Отправить</button>
+            <h2 class="user-information_faculty">{{user.faculty}}</h2>
+            <h2 class="user-information_group">Группа №{{user.class}}</h2>
+            <h2 class="user-information_GPA">Средний балл: <span>{{user.average}}</span></h2>
+            <h2 class="user-information_attendance">Посещаемость: <span>{{user.attendance}}%</span></h2>
+            <form class="how-are-you" method="POST">
+                {% if user.status == "" %}
+                    <textarea class="user-information_how-are-you" name="status" placeholder="Как Ваши дела?"></textarea>
+                {% else %}
+                    <textarea class="user-information_how-are-you" name="status" placeholder="{{user.status}}"></textarea>
+                {% endif %}
+
+                <button type="submit" class="user-information_how-are-you_send">Отправить</button>
             </form>
         </div>
-{% endblock %}
+    {% endblock %}
