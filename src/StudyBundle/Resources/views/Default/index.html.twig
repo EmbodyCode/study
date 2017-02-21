@@ -48,12 +48,7 @@
 
                 <div>
 
-                    <form action="{{path('home')}}" {{ form_enctype(form3) }} method="POST">
-                        {{ form_widget(form3) }}
-                        <div class="col-md-12">
-                            <span class="btn btn-default btn-file"> Browse {{ form_widget(form3.eventPictureFile) }}</span>
-                        </div>
-                    </form>
+                    <a href="/event">Добавить событие</a>
 
                 </div>
             {% endif %}
@@ -65,7 +60,7 @@
 {% block user %}
     <div class="main">
         <div class="user-information">
-            <div class="user-information_photo" style="background: url({{asset('uploads/user/profilepics/'~user.profilePicturePath~'')}});
+            <div class="user-information_photo" style="background: url({{asset('web/uploads/user/profilepics/'~user.profilePicturePath~'')}});
                  background-repeat: no-repeat; background-size: cover; background-position: center;"></div>
             <button class="user-information_settings">Мой профиль</button>
             <h1 class="user-information_name">{{user.firstname}} {{user.lastname }}</h1>

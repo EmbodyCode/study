@@ -4,18 +4,19 @@ namespace StudyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\Util\SecureRandom;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Events
  * 
  * @ORM\Table(name="events")
  * @ORM\Entity(repositoryClass="StudyBundle\Repository\EventsRepository")
- * @ORM\HasLifecycleCallbacks()
+ * @Vich\Uploadable
  */
-class Events
-{
+class Events {
+
     /**
      * @var int
      *
@@ -40,11 +41,6 @@ class Events
     private $date;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $eventPicturePath;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="createdAt", type="datetime")
@@ -57,154 +53,65 @@ class Events
      * @ORM\Column(name="updatedAt", type="datetime")
      */
     private $updatedAt;
-    
+
     /**
-     * @Assert\File(maxSize="2048k")
-     * @Assert\Image(mimeTypesMessage="Please upload a valid image.")
-     */
-    protected $eventPictureFile;
-    // for temporary storage
-    private $tempEventPicturePath;
-    
-    /**
-     * Sets the file used for profile picture uploads
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
      * 
-     * @param UploadedFile $file
-     * @return object
+     * @Vich\UploadableField(mapping="event_avatar", fileNameProperty="avatarFileName")
+     * 
+     * @var File
      */
-    public function setEventPictureFile(UploadedFile $file = null) {
-        // set the value of the holder
-        $this->eventPictureFile = $file;
+    private $avatarFile;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
+     */
+    private $avatarFileName;
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile
+     *
+     * @return Events
+     */
+    public function setAvatarFile(File $avatarFile = null) {
+        $this->avatarFile = $avatarFile;
 
         return $this;
     }
-    
-    
-     /**
-     * Get the file used for profile picture uploads
-     * 
-     * @return UploadedFile
-     */
-    public function getEventPictureFile() {
 
-        return $this->eventPictureFile;
+    /**
+     * @return File|null
+     */
+    public function getAvatarFile() {
+        return $this->avatarFile;
     }
 
     /**
-     * Get the absolute path of the profilePicturePath
+     * @param string $avatarFileName
+     *
+     * @return Events
      */
-    public function getEventPictureAbsolutePath() {
-        return null === $this->eventPicturePath ? null : $this->getUploadRootDir() . '/' . $this->eventPicturePath;
-    }
-    
-    /**
-     * Get root directory for file uploads
-     * 
-     * @return string
-     */
-    protected function getUploadRootDir($type = 'eventPicture') {
-        // the absolute directory path where uploaded
-        // documents should be saved
-        return __DIR__ . '/../../../web/' . $this->getUploadDir($type);
+    public function setAvatarFileName($avatarFileName) {
+        $this->avatarFileName = $avatarFileName;
+
+        return $this;
     }
 
     /**
-     * Specifies where in the /web directory profile pic uploads are stored
-     * 
-     * @return string
+     * @return string|null
      */
-    protected function getUploadDir($type = 'eventPicture') {
-        // the type param is to change these methods at a later date for more file uploads
-        // get rid of the __DIR__ so it doesn't screw up
-        // when displaying uploaded doc/image in the view.
-        return 'uploads/user/eventpics';
+    public function getAvatarFileName() {
+        return $this->avatarFileName;
     }
-
-    /**
-     * Get the web path for the user
-     * 
-     * @return string
-     */
-    public function getWebEventPicturePath() {
-
-        return '/' . $this->getUploadDir() . '/' . $this->getEventPicturePath();
-    }
-
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function preUploadEventPicture() {
-        if (null !== $this->getEventPictureFile()) {
-            // a file was uploaded
-            // generate a unique filename
-            $filename = $this->generateRandomEventPictureFilename();
-            $this->setEventPicturePath($filename . '.' . $this->getEventPictureFile()->guessExtension());
-        }
-    }
-
-    /**
-     * Generates a 32 char long random filename
-     * 
-     * @return string
-     */
-    public function generateRandomEventPictureFilename() {
-        $count = 0;
-        do {
-            $generator = new SecureRandom();
-            $random = $generator->nextBytes(16);
-            $randomString = bin2hex($random);
-            $count++;
-        } while (file_exists($this->getUploadRootDir() . '/' . $randomString . '.' . $this->getEventPictureFile()->guessExtension()) && $count < 50);
-
-        return $randomString;
-    }
-
-    /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     * 
-     * Upload the profile picture
-     * 
-     * @return mixed
-     */
-    public function uploadEventPicture() {
-        // check there is a profile pic to upload
-        if ($this->getEventPictureFile() === null) {
-            return;
-        }
-        // if there is an error when moving the file, an exception will
-        // be automatically thrown by move(). This will properly prevent
-        // the entity from being persisted to the database on error
-        $this->getEventPictureFile()->move($this->getUploadRootDir(), $this->getEventPicturePath());
-
-        // check if we have an old image
-        if (isset($this->tempEventPicturePath) && file_exists($this->getUploadRootDir() . '/' . $this->tempEventPicturePath)) {
-            // delete the old image
-            unlink($this->getUploadRootDir() . '/' . $this->tempEventPicturePath);
-            // clear the temp image path
-            $this->tempEventPicturePath = null;
-        }
-        $this->eventPictureFile = null;
-    }
-
-    /**
-     * @ORM\PostRemove()
-     */
-    public function removeEventPictureFile() {
-        if ($file = $this->getEventPictureAbsolutePath() && file_exists($this->getEventPictureAbsolutePath())) {
-            unlink($file);
-        }
-    }
-
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -214,8 +121,7 @@ class Events
      * @param string $title
      * @return Events
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -226,8 +132,7 @@ class Events
      *
      * @return string 
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -237,8 +142,7 @@ class Events
      * @param \DateTime $date
      * @return Events
      */
-    public function setDate($date)
-    {
+    public function setDate($date) {
         $this->date = $date;
 
         return $this;
@@ -249,32 +153,8 @@ class Events
      *
      * @return \DateTime 
      */
-    public function getDate()
-    {
+    public function getDate() {
         return $this->date;
-    }
-
-    /**
-     * Set eventPicturePath
-     *
-     * @param string $eventPicturePath
-     * @return Events
-     */
-    public function setEventPicturePath($eventPicturePath)
-    {
-        $this->eventPicturePath = $eventPicturePath;
-
-        return $this;
-    }
-
-    /**
-     * Get eventPicturePath
-     *
-     * @return string 
-     */
-    public function getEventPicturePath()
-    {
-        return $this->eventPicturePath;
     }
 
     /**
@@ -283,8 +163,7 @@ class Events
      * @param \DateTime $createdAt
      * @return Events
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
 
         return $this;
@@ -295,8 +174,7 @@ class Events
      *
      * @return \DateTime 
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
 
@@ -306,8 +184,7 @@ class Events
      * @param string $updatedAt
      * @return Events
      */
-    public function setUpdatedAt($updatedAt)
-    {
+    public function setUpdatedAt($updatedAt) {
         $this->updatedAt = $updatedAt;
 
         return $this;
@@ -318,8 +195,8 @@ class Events
      *
      * @return string 
      */
-    public function getUpdatedAt()
-    {
+    public function getUpdatedAt() {
         return $this->updatedAt;
     }
+
 }
