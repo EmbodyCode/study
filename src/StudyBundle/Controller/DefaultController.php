@@ -6,8 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use StudyBundle\Entity\News;
+use StudyBundle\Entity\Events;
 use StudyBundle\Form\NewsType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use StudyBundle\Form\StatusType;
+use StudyBundle\Form\EventType;
 
 class DefaultController extends Controller {
 
@@ -18,16 +21,19 @@ class DefaultController extends Controller {
         $user = $this->getUser();
         $findNews = $em = $this->getDoctrine()->getRepository('StudyBundle:News')->findBy(array(), array('id' => 'DESC'));
         $news = new News();
-        $form = $this->createForm(NewsType::class, $news);
-        $form2 = $this->createForm(StatusType::class, $user);
+        $events = new Events();
+        $formNews = $this->createForm(NewsType::class, $news);
+        $formStatus = $this->createForm(StatusType::class, $user);
+        $formEvents = $this->createForm(EventType::class, $events);
 
         /* Обновление статуса пользователя */
         if ($request->getMethod() == "POST") {
-            $form->handleRequest($request);
-            $form2->handleRequest($request);
+            $formNews->handleRequest($request);
+            $formStatus->handleRequest($request);
+            $formEvents->handleRequest($request);
 
-            if ($form->isSubmitted()) {
-                $news = $form->getData();
+            if ($formNews->get('Добавить')->isClicked() and $formNews->isValid()) {
+                $news = $formNews->getData();
                 $news->setCreatedAt(new \DateTime('now'));
                 $news->setUpdatedAt(new \DateTime('now'));
                 $news->setAuthor($user->getUsername());
@@ -37,10 +43,20 @@ class DefaultController extends Controller {
                 $em->flush();
                 return $this->redirectToRoute('home');
             } 
-            else if($form2->isSubmitted())
+            if ($formStatus->get('Добавить')->isClicked() and $formStatus->isValid())
             {
                 
-                $status = $form2->getData();
+                $status = $formStatus->getData();
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($status);
+                $em->flush();
+                return $this->redirectToRoute('home');
+            }
+            if ($formEvents->get('Сохранить')->isClicked())
+            {
+                $events = $formEvents->getData();
+                $events->setCreatedAt(new \DateTime('now'));
+                $events->setUpdatedAt(new \DateTime('now'));
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($status);
                 $em->flush();
@@ -51,8 +67,9 @@ class DefaultController extends Controller {
         return $this->render('StudyBundle:Default:index.html.twig', array(''
                     . 'user' => $user, ''
                     . 'newsArray' => $findNews, ''
-                    . 'form' => $form->createView(),''
-            . 'form2' => $form2->createView()));
+                    . 'form' => $formNews->createView(),''
+            . 'form2' => $formStatus->createView(),''
+            . 'form3' => $formEvents->createView()));
     }
 
 }
