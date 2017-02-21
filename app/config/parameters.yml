@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: localhost
+    database_port: null
+    database_name: lasandby_symf1
+    database_user: lasandby_symf1
+    database_password: 'Q&iBBq^nk]KqT4lxPT#84.@0'
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: 4ba461dccc964c469febbf2ec19745ef

@@ -52,7 +52,7 @@ class DefaultController extends Controller {
                         array('id' => 'DESC'));
         $findEvents = $em = $this->getDoctrine()
                 ->getRepository('StudyBundle:Events')->findBy(array(),
-                        array('id' => 'DESC'));
+                        array('date' => 'ASC'));
         $news = new News();
         $formNews = $this->createForm(NewsType::class, $news);
         $formStatus = $this->createForm(StatusType::class, $user);
