@@ -46,7 +46,7 @@
                     <a href="#"><li>Связаться со старостой</li></a>
                 </ul>
             </div>
-            
+
             {% block user %}
                 <div class="main">
                     <div class="user-information">
@@ -99,6 +99,7 @@
 
             </div>
 
+         {% block events %}
             <div class="upcoming-events">
                 <h1 class="upcoming-events-title">Предстоящие события</h1>
                 <a href="#"><div class="upcoming-events-item" style="background: url(https://content.onliner.by/news/1100x5616/76b9650712a1e11804c32b952ffce7fd.jpeg);
@@ -122,13 +123,14 @@
                         <p class="upcoming-events-item_date">2.09.2016 в 16:10</p>
                     </div></a>
             </div>
+        {% endblock %}
         </div>
         <footer>Study &copy; 2016</footer>
 
         <script type="text/javascript">$(window).on('load', function () {
-           var $preloader = $('#p_prldr');
-           $preloader.delay(5200).fadeOut('slow');
-       });</script>
+                var $preloader = $('#p_prldr');
+                $preloader.delay(5200).fadeOut('slow');
+            });</script>
 
 
     </body>

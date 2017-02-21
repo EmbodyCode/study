@@ -75,4 +75,24 @@
 
             </form>
         </div>
-    {% endblock %}
+{% endblock %}
+
+{% block events %}
+        <div class="upcoming-events">
+            <h1 class="upcoming-events-title">Предстоящие события</h1>
+            {% if eventsArray is defined %}
+                {% for event in eventsArray %}
+                    {% if user.class == event.classDestination %}
+                        <a href="#">
+                            <div class="upcoming-events-item" 
+                                     style="background: url({{asset('web/uploads/events/avatars/'~event.avatarFileName~'')}});
+                             background-position: center; background-size: cover">
+                                <h1 class="upcoming-events-item_title">{{event.title}} </h1>
+                                <p class="upcoming-events-item_date">{{ event.date |localizeddate('none', 'none', 'ru_RU', null, "d MMMM Y 'в' H:m")}}</p>
+                            </div>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+{% endblock %}

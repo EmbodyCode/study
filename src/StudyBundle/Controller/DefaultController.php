@@ -20,6 +20,7 @@ class DefaultController extends Controller {
      * @Security("has_role('ROLE_STEWARD')")
      */
     public function eventAction(Request $request) {
+        $user = $this->getUser();
         $event = new Events();
         $form = $this->createForm(EventType::class, $event);
         if($request->getMethod()=="POST")
@@ -30,6 +31,7 @@ class DefaultController extends Controller {
                 $event = $form->getData();
                 $event->setCreatedAt(new \DateTime('now'));
                 $event->setUpdatedAt(new \DateTime('now'));
+                $event->setClassDestination($user->getClass());
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($event);
                 $em->flush();
@@ -45,7 +47,12 @@ class DefaultController extends Controller {
      */
     public function indexAction(Request $request) {
         $user = $this->getUser();
-        $findNews = $em = $this->getDoctrine()->getRepository('StudyBundle:News')->findBy(array(), array('id' => 'DESC'));
+        $findNews = $em = $this->getDoctrine()
+                ->getRepository('StudyBundle:News')->findBy(array(), 
+                        array('id' => 'DESC'));
+        $findEvents = $em = $this->getDoctrine()
+                ->getRepository('StudyBundle:Events')->findBy(array(),
+                        array('id' => 'DESC'));
         $news = new News();
         $formNews = $this->createForm(NewsType::class, $news);
         $formStatus = $this->createForm(StatusType::class, $user);
@@ -79,6 +86,7 @@ class DefaultController extends Controller {
         return $this->render('StudyBundle:Default:index.html.twig', array(''
                     . 'user' => $user, ''
                     . 'newsArray' => $findNews, ''
+                    . 'eventsArray' => $findEvents,''
                     . 'form' => $formNews->createView(), ''
                     . 'form2' => $formStatus->createView()));
     }

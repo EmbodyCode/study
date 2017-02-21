@@ -53,6 +53,11 @@ class Events {
      * @ORM\Column(name="updatedAt", type="datetime")
      */
     private $updatedAt;
+    
+    /**
+     * @ORM\Column(name="classDestination", type="integer", length=7)
+     */
+    private $classDestination;
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
@@ -114,7 +119,17 @@ class Events {
     public function getId() {
         return $this->id;
     }
+    
+    public function getClassDestination() {
+        return $this->classDestination;
+    }
+    
+    public function setClassDestination($classDestination) {
+        $this->classDestination = $classDestination;
+        return $this;
+    }
 
+    
     /**
      * Set title
      *
