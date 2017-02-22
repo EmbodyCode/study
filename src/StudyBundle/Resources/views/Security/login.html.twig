@@ -23,7 +23,7 @@
                     <button type="submit">Войти</button>
                     <a href="" class="help_link">Нужна помощь?</a>
                     {% if error %}
-                        <div><font color="red">{{ error|trans({}, 'FOSUserBundle') }}</font></div>
+                        <div><font color="red">{{ error.messageKey|trans(error.messageData, 'security') }}</font></div>
                     {% endif %}
                 </form>
             </div>
