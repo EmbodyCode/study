@@ -88,7 +88,7 @@
                                      style="background: url({{asset('web/uploads/events/avatars/'~event.avatarFileName~'')}});
                              background-position: center; background-size: cover">
                                 <h1 class="upcoming-events-item_title">{{event.title}} </h1>
-                                <p class="upcoming-events-item_date">{{ event.date |localizeddate('none', 'none', 'ru_RU', null, "d MMMM Y 'в' H:mm ")}}</p>
+                                <p class="upcoming-events-item_date">{{ event.date |localizeddate('none', 'none', 'ru_RU', null, "d.MM.Y 'в' H:mm ")}}</p>
                             </div>
                         </a>
                     {% endif %}
